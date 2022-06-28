@@ -1,0 +1,29 @@
+{
+    "general": {
+        "run_on_launch": true,
+        "data_folder": "./data",
+        "target_url": "http://localhost:8080/test"
+    },
+    "gtfs": {
+        "source": "http://gtfs.irail.be/de-lijn/de_lijn-gtfs.zip",
+        "cron": "0 0 3 * * *"
+    },
+    "gtfs_realtime": {
+        "source": "https://api.delijn.be/gtfs/v1/realtime",
+        "cron": "*/30 * * * * *",
+        "auth_headers": {
+            "Ocp-Apim-Subscription-Key": "cf97c65afbe84e0c8e20142f4cb62119"
+        }
+    },
+    "uri_templates": {
+        "stop": "https://data.delijn.be/stops/{stops.stop_code}",
+        "connection": "https://data.delijn.be/connections/{routeName}/{direction}/{trips.startTime(yyyyMMdd\\'T\\'HHmm)}/{depStop}/",
+        "trip": "https://data.delijn.be/trips/{routeName}/{direction}/{trips.startTime(yyyyMMdd\\'T\\'HHmm)}",
+        "route": "https://data.delijn.be/routes/{routeName}",
+        "resolve": {
+            "routeName": "routes.route_long_name.replace(/\\s/g, '_')",
+            "depStop": "connection.departureStop.stop_code",
+            "direction": "trips.trip_headsign.replace(/\\s/g, '_')"
+        }
+    }
+}
