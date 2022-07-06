@@ -19,7 +19,7 @@
     "commander": "^9.3.0",
     "cron": "^2.0.0",
     "del": "^6.1.1",
-    "gtfs2lc": "^2.0.3",
+    "gtfs2lc": "^2.1.0",
     "gtfsrt2lc": "^2.0.1",
     "jsonld": "^6.0.0",
     "stream-json": "^1.7.4",

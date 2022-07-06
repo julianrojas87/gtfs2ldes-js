@@ -21,7 +21,7 @@ async function run() {
     });
 
     // Create and schedule cron job to process static GTFS
-    const gtfsJob = new CronJob({
+    new CronJob({
         cronTime: config["gtfs"].cron,
         onTick: async () => {
             // Stop realtime process first
@@ -37,7 +37,7 @@ async function run() {
         start: true
     });
 
-    // Kick-off static data job configured for it
+    // Kick-off static data job if configured for it
     if(config["general"].run_on_launch) {
         await processGTFS(config);
     }
