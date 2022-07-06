@@ -2,10 +2,13 @@
     "general": {
         "run_on_launch": true,
         "data_folder": "./data",
-        "target_url": "http://localhost:8080/test"
+        "target_url": "http://localhost:8080/test",
+        "throttle_rate": 1000
     },
     "gtfs": {
-        "source": "http://gtfs.irail.be/de-lijn/de_lijn-gtfs.zip",
+        "source": "/home/julian/Desktop/delijn.gtfs.latest.0.zip",
+        "source_prod": "https://gtfs.irail.be/de-lijn/de_lijn-gtfs.zip",
+        "source_test": "https://sncb-opendata.hafas.de/gtfs/static/c21ac6758dd25af84cca5b707f3cb3de",
         "cron": "0 0 3 * * *"
     },
     "gtfs_realtime": {
@@ -14,6 +17,25 @@
         "auth_headers": {
             "Ocp-Apim-Subscription-Key": "cf97c65afbe84e0c8e20142f4cb62119"
         }
+    },
+    "@context": {
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "dct": "http://purl.org/dc/terms/",
+        "prov": "http://www.w3.org/ns/prov#",
+        "lc": "http://semweb.mmlab.be/ns/linkedconnections#",
+        "gtfs": "http://vocab.gtfs.org/terms#",
+        "gtfs:trip": { "@type": "@id" },
+        "gtfs:route": { "@type": "@id" },
+        "gtfs:pickupType": { "@type": "@id" },
+        "gtfs:dropOffType": { "@type": "@id" },
+        "Connection": { "@id": "lc:Connection", "@type": "@id" },
+        "CancelledConnection": { "@id": "lc:CancelledConnection", "@type": "@id" },
+        "departureTime": { "@id": "lc:departureTime", "@type": "xsd:dateTime" },
+        "arrivalTime": { "@id": "lc:arrivalTime", "@type": "xsd:dateTime" },
+        "departureStop": { "@id": "lc:departureStop", "@type": "@id" },
+        "arrivalStop": { "@id": "lc:arrivalStop", "@type": "@id" },
+        "isVersionOf": { "@id": "dct:isVersionOf", "@type": "@id" },
+        "generatedAtTime": { "@id": "prov:generatedAtTime", "@type": "xsd:dateTime"}
     },
     "uri_templates": {
         "stop": "https://data.delijn.be/stops/{stops.stop_code}",
