@@ -1,8 +1,8 @@
+import { jest } from "@jest/globals";
 import fastify from "fastify";
 import fs from "fs";
 import del from "del";
 import { processGTFS } from "../lib/GTFS.js";
-import { request } from "undici";
 
 // Mock config
 const config = {
@@ -44,22 +44,20 @@ const config = {
     }
 };
 
+jest.setTimeout(30000);
+
+let server;
+
 beforeAll(async () => {
     // Setup mock target server
-    const server = fastify({ logger: true });
-    server.register((fstfy) => {
+    server = fastify({ logger: false });
+    await server.register(async (fstfy) => {
         fstfy.post("/*", async (request, reply) => {
             reply.send("OK");
         });
     });
     
-    server.listen({ port: 8080, host: "0.0.0.0" }, (err, address) => {
-        if (err) {
-            server.log.error(err)
-            process.exit(1)
-        }
-        console.log(`server listening on ${address}`);
-    });
+    await server.listen({ port: 8080, host: "0.0.0.0" });
 });
 
 test("Process GTFS file for the first time", async () => {
