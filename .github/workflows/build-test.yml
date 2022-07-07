@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [14.x, 16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - name: Checkout
@@ -32,7 +32,7 @@ jobs:
       - name: Submit coverage results
         uses: coverallsapp/github-action@master
         with:
-          github-token: ${{ secrets.github_token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: run-${{ matrix.node-version }}
           parallel: true
     
@@ -43,5 +43,5 @@ jobs:
       - name: Consolidate test coverage from different jobs
         uses: coverallsapp/github-action@master
         with:
-          github-token: ${{ secrets.github_token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
