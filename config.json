@@ -6,14 +6,12 @@
         "throttle_rate": 1000
     },
     "gtfs": {
-        "source_prod": "https://gtfs.irail.be/de-lijn/de_lijn-gtfs.zip",
-        "source_test": "https://sncb-opendata.hafas.de/gtfs/static/c21ac6758dd25af84cca5b707f3cb3de",
-        "source": "./test/data/delijn.test.0.zip",
+        "source": "/home/julian/Desktop/delijn.gtfs.latest.1.zip",
         "cron": "0 0 3 * * *"
     },
     "gtfs_realtime": {
         "source": "https://api.delijn.be/gtfs/v1/realtime",
-        "cron": "*/30 * * * * *",
+        "cron": "*/10 * * * * *",
         "auth_headers": {
             "Ocp-Apim-Subscription-Key": "cf97c65afbe84e0c8e20142f4cb62119"
         }

@@ -21,8 +21,9 @@
     "cron": "^2.0.0",
     "del": "^6.1.1",
     "gtfs2lc": "^2.1.2",
-    "gtfsrt2lc": "^2.0.1",
+    "gtfsrt2lc": "^2.0.2",
     "jsonld": "^6.0.0",
+    "level": "^8.0.0",
     "stream-json": "^1.7.4",
     "undici": "^5.5.1",
     "unzipper": "^0.10.11"
