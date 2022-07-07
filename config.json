@@ -6,9 +6,9 @@
         "throttle_rate": 1000
     },
     "gtfs": {
-        "source": "/home/julian/Desktop/delijn.gtfs.latest.0.zip",
         "source_prod": "https://gtfs.irail.be/de-lijn/de_lijn-gtfs.zip",
         "source_test": "https://sncb-opendata.hafas.de/gtfs/static/c21ac6758dd25af84cca5b707f3cb3de",
+        "source": "./test/data/delijn.test.0.zip",
         "cron": "0 0 3 * * *"
     },
     "gtfs_realtime": {
@@ -38,7 +38,7 @@
         "generatedAtTime": { "@id": "prov:generatedAtTime", "@type": "xsd:dateTime"}
     },
     "uri_templates": {
-        "stop": "https://data.delijn.be/stops/{stops.stop_code}",
+        "stop": "https://www.delijn.be/nl/haltes/halte/{stops.stop_code}",
         "connection": "https://data.delijn.be/connections/{routeName}/{direction}/{trips.startTime(yyyyMMdd\\'T\\'HHmm)}/{depStop}/",
         "trip": "https://data.delijn.be/trips/{routeName}/{direction}/{trips.startTime(yyyyMMdd\\'T\\'HHmm)}",
         "route": "https://data.delijn.be/routes/{routeName}",
