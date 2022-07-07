@@ -60,7 +60,7 @@ beforeAll(async () => {
     await server.listen({ port: 8080, host: "0.0.0.0" });
 });
 
-test("Process GTFS file for the first time", async () => {
+test("Process GTFS file for the first time (should produce 60 connections)", async () => {
     expect.assertions(2);
     config["gtfs"].source = "./test/data/delijn.test.0.zip";
     const { count, failed } = await processGTFS(config);
@@ -68,7 +68,7 @@ test("Process GTFS file for the first time", async () => {
     expect(failed).toBe(0);
 });
 
-test("Process second GTFS file which only should produce 2 new connections", async () => {
+test("Process second GTFS file which should only produce 2 new connections", async () => {
     expect.assertions(2);
     config["gtfs"].source = "./test/data/delijn.test.1.zip";
     const { count, failed } = await processGTFS(config);
