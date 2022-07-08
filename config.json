@@ -1,19 +1,19 @@
 {
     "general": {
-        "run_on_launch": true,
-        "data_folder": "./data",
-        "target_url": "http://localhost:8080/test",
-        "throttle_rate": 1000
+        "run_on_launch": "${RUN_ON_LAUNCH}",
+        "data_folder": "/data",
+        "target_url": "${TARGET_URL}",
+        "throttle_rate": "${THROTTLE_RATE}"
     },
     "gtfs": {
-        "source": "./test/data/delijn.test.0.zip",
-        "cron": "0 0 3 * * *"
+        "source": "${GTFS_SOURCE}",
+        "cron": "${GTFS_CRON}"
     },
     "gtfs_realtime": {
-        "source": "https://api.delijn.be/gtfs/v1/realtime",
-        "cron": "*/30 * * * * *",
+        "source": "${GTFSRT_SOURCE}",
+        "cron": "${GTFSRT_CRON}",
         "auth_headers": {
-            "Ocp-Apim-Subscription-Key": "cf97c65afbe84e0c8e20142f4cb62119"
+            "${AUTH_HEADER}": "${AUTH_HEADER_VALUE}"
         }
     },
     "@context": {
