@@ -54,9 +54,9 @@ Assuming that this connection rule is scheduled to run on `2022-07-01`, `2022-07
 
 ```json
 {
-    "20220701": { "type": "Connection", departureDelay: 0, arrivalDelay: 0},
-    "20220702": { "type": "Connection", departureDelay: 0, arrivalDelay: 0},
-    "20220703": { "type": "Connection", departureDelay: 0, arrivalDelay: 0},
+    "20220701": { "type": "Connection", "departureDelay": 0, "arrivalDelay": 0},
+    "20220702": { "type": "Connection", "departureDelay": 0, "arrivalDelay": 0},
+    "20220703": { "type": "Connection", "departureDelay": 0, "arrivalDelay": 0},
 }
 ```
 
