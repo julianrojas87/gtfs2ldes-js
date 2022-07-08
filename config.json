@@ -6,12 +6,12 @@
         "throttle_rate": 1000
     },
     "gtfs": {
-        "source": "/home/julian/Desktop/delijn.gtfs.latest.1.zip",
+        "source": "./test/data/delijn.test.0.zip",
         "cron": "0 0 3 * * *"
     },
     "gtfs_realtime": {
         "source": "https://api.delijn.be/gtfs/v1/realtime",
-        "cron": "*/10 * * * * *",
+        "cron": "*/30 * * * * *",
         "auth_headers": {
             "Ocp-Apim-Subscription-Key": "cf97c65afbe84e0c8e20142f4cb62119"
         }
