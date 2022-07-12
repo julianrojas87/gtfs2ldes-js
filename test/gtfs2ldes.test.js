@@ -56,6 +56,11 @@ let indexes;
 beforeAll(async () => {
     // Setup mock target server
     server = fastify({ logger: false });
+    // Add support for N-Triples
+    server.addContentTypeParser("application/n-triples", { parseAs: 'string' }, function (req, body, done) {
+        done(null, body);
+    });
+
     await server.register(async (fstfy) => {
         fstfy.post("/*", async (request, reply) => {
             reply.send("OK");
@@ -110,7 +115,7 @@ test("Process second GTFS-realtime update (should update only 1 connection with 
     const { count, failed } = await processGTFSRealtime(config, idxs);
     // Get connection we expect to be updated
     const updatedConn = await history.get("Turnhout-Herentals-Herselt-Leuven/59/102827/106231/13:10:00/15:01:00/15:03:00/0/0");
-    
+
     expect(count).toBe(1);
     expect(failed).toBe(0);
     expect(updatedConn['20220707'].departureDelay).toBe(744);
@@ -120,7 +125,7 @@ test("Process second GTFS-realtime update (should update only 1 connection with 
 
 // Function to get set of static indexes
 async function getIndexes() {
-    if(!indexes) {
+    if (!indexes) {
         indexes = await buildIndexes(config);
     }
 
@@ -129,7 +134,7 @@ async function getIndexes() {
 
 // Function to get reference to historic records
 async function getHistoryDB() {
-    if(!historyDB) {
+    if (!historyDB) {
         historyDB = await new Level("./test/data/history.db", { valueEncoding: "json" });
     }
     await historyDB.open();
