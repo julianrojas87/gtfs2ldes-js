@@ -101,5 +101,5 @@ This application can be run within a docker container, following these steps:
 5. Run the docker container:
 
    ```bash
-   docker run --volume=/home/user/gtfs-records:/data --env-file=conf.env
+   docker run --volume=/home/user/gtfs-records:/data --env-file=conf.env gtfs2ldes-js
    ```
