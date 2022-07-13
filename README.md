@@ -23,7 +23,7 @@ The produced LCs will be sent via HTTP POST requests to a configured LDES ingest
 	lc:departureStop <https://www.delijn.be/nl/haltes/halte/101908> ;
 	lc:arrivalStop <https://www.delijn.be/nl/haltes/halte/101916> ;
 	lc:departureTime "2022-07-09T10:21:00.000Z"^^xsd:dateTime ;
-   lc:arrivalTime "2022-07-09T10:22:00.000Z"^^xsd:dateTime ;
+	lc:arrivalTime "2022-07-09T10:22:00.000Z"^^xsd:dateTime ;
 	gtfs:dropOffType gtfs:Regular ;
 	gtfs:pickupType gtfs:Regular ;
 	gtfs:route <https://example.org/routes/Hoboken-Wijnegem> .
