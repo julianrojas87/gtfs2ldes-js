@@ -36,13 +36,16 @@ const config = {
     },
     "uri_templates": {
         "stop": "https://data.delijn.be/stops/{stops.stop_code}",
-        "connection": "https://data.delijn.be/connections/{routeName}/{direction}/{trips.startTime(yyyyMMdd\\'T\\'HHmm)}/{depStop}/",
-        "trip": "https://data.delijn.be/trips/{routeName}/{direction}/{trips.startTime(yyyyMMdd\\'T\\'HHmm)}",
+        "connection": "https://data.delijn.be/connections/{routeName}/{direction}/{tripStartTime}/{depStop}/{depTime}/{arrStop}/",
+        "trip": "https://data.delijn.be/trips/{routeName}/{direction}/{tripStartTime}",
         "route": "https://data.delijn.be/routes/{routeName}",
         "resolve": {
             "routeName": "routes.route_long_name.replace(/\\s/g, '_')",
+            "direction": "trips.trip_headsign.replace(/\\s/g, '_')",
+            "tripStartTime": "format(trips.startTime, 'yyyyMMdd\\'T\\'HHmm')",
             "depStop": "connection.departureStop.stop_code",
-            "direction": "trips.trip_headsign.replace(/\\s/g, '_')"
+            "depTime": "format(connection.departureTime, 'yyyyMMdd\\'T\\'HHmm')",
+            "arrStop": "connection.arrivalStop.stop_code"
         }
     }
 };
@@ -68,6 +71,11 @@ beforeAll(async () => {
     });
 
     await server.listen({ port: 8080, host: "0.0.0.0" });
+});
+
+afterAll(async () => {
+    // Clean up
+    await cleanUp();
 });
 
 test("Process GTFS file for the first time (should produce a total of 201 connections)", async () => {
