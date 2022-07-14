@@ -36,14 +36,17 @@
         "generatedAtTime": { "@id": "prov:generatedAtTime", "@type": "xsd:dateTime"}
     },
     "uri_templates": {
-        "stop": "https://www.delijn.be/nl/haltes/halte/{stops.stop_code}",
-        "connection": "https://data.delijn.be/connections/{routeName}/{direction}/{trips.startTime(yyyyMMdd\\'T\\'HHmm)}/{depStop}/",
-        "trip": "https://data.delijn.be/trips/{routeName}/{direction}/{trips.startTime(yyyyMMdd\\'T\\'HHmm)}",
+        "stop": "https://data.delijn.be/stops/{stops.stop_code}",
+        "connection": "https://data.delijn.be/connections/{routeName}/{direction}/{tripStartTime}/{depStop}/{depTime}/{arrStop}/",
+        "trip": "https://data.delijn.be/trips/{routeName}/{direction}/{tripStartTime}",
         "route": "https://data.delijn.be/routes/{routeName}",
         "resolve": {
             "routeName": "routes.route_long_name.replace(/\\s/g, '_')",
+            "direction": "trips.trip_headsign.replace(/\\s/g, '_')",
+            "tripStartTime": "format(trips.startTime, 'yyyyMMdd\\'T\\'HHmm')",
             "depStop": "connection.departureStop.stop_code",
-            "direction": "trips.trip_headsign.replace(/\\s/g, '_')"
+            "depTime": "format(connection.departureTime, 'yyyyMMdd\\'T\\'HHmm')",
+            "arrStop": "connection.arrivalStop.stop_code"
         }
     }
 }
