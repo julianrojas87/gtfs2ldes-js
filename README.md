@@ -94,6 +94,8 @@ This application can be run within a docker container, following these steps:
    AUTH_HEADER=Ocp-Apim-Subscription-Key # Optional HTTP header name for making requests on a GTFS-RT API. For example as required by De Lijn (https://data.delijn.be/docs/services/)
    
    AUTH_HEADER_VALUE=cf97c65afbe84e0c8e20142f4cb62119 # Optional HTTP header value.
+
+   BASE_IRI=http://example.org/ # Base entity IRI used to build unique identifiers for connections, trips, stops, etc. Make sure to always use a trail slash. 
    ```
 
 4. Prepare a folder where the application will persist the historic connection records (e.g., `/home/user/gtfs-records`). 

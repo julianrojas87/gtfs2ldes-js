@@ -36,10 +36,10 @@
         "generatedAtTime": { "@id": "prov:generatedAtTime", "@type": "xsd:dateTime"}
     },
     "uri_templates": {
-        "stop": "https://data.delijn.be/stops/{stops.stop_code}",
-        "connection": "https://data.delijn.be/connections/{routeName}/{direction}/{tripStartTime}/{depStop}/{depTime}/{arrStop}/",
-        "trip": "https://data.delijn.be/trips/{routeName}/{direction}/{tripStartTime}",
-        "route": "https://data.delijn.be/routes/{routeName}",
+        "stop": "${BASE_IRI}stops/{stops.stop_code}",
+        "connection": "${BASE_IRI}connections/{routeName}/{direction}/{tripStartTime}/{depStop}/{depTime}/{arrStop}/",
+        "trip": "${BASE_IRI}trips/{routeName}/{direction}/{tripStartTime}",
+        "route": "${BASE_IRI}routes/{routeName}",
         "resolve": {
             "routeName": "routes.route_long_name.replace(/\\s/g, '_')",
             "direction": "trips.trip_headsign.replace(/\\s/g, '_')",
