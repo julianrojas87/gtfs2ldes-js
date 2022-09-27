@@ -17,14 +17,20 @@ const config = {
     "gtfs_realtime": {},
     "@context": {
         "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
         "dct": "http://purl.org/dc/terms/",
         "prov": "http://www.w3.org/ns/prov#",
         "lc": "http://semweb.mmlab.be/ns/linkedconnections#",
         "gtfs": "http://vocab.gtfs.org/terms#",
+        "wgs": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+        "gsp": "http://www.opengis.net/ont/geosparql#",
         "gtfs:trip": { "@type": "@id" },
         "gtfs:route": { "@type": "@id" },
         "gtfs:pickupType": { "@type": "@id" },
         "gtfs:dropOffType": { "@type": "@id" },
+        "wgs:lat": { "@type": "xsd:double" },
+        "wgs:long": { "@type": "xsd:double" },
+        "gsp:asWKT": { "@type": "gsp:wktLiteral" },
         "Connection": { "@id": "lc:Connection", "@type": "@id" },
         "CancelledConnection": { "@id": "lc:CancelledConnection", "@type": "@id" },
         "departureTime": { "@id": "lc:departureTime", "@type": "xsd:dateTime" },
@@ -32,7 +38,7 @@ const config = {
         "departureStop": { "@id": "lc:departureStop", "@type": "@id" },
         "arrivalStop": { "@id": "lc:arrivalStop", "@type": "@id" },
         "isVersionOf": { "@id": "dct:isVersionOf", "@type": "@id" },
-        "generatedAtTime": { "@id": "prov:generatedAtTime", "@type": "xsd:dateTime" }
+        "generatedAtTime": { "@id": "prov:generatedAtTime", "@type": "xsd:dateTime"}
     },
     "uri_templates": {
         "stop": "https://data.delijn.be/stops/{stops.stop_code}",
@@ -80,7 +86,7 @@ afterAll(async () => {
 
 test("Process GTFS file for the first time (should produce a total of 201 connections)", async () => {
     expect.assertions(2);
-    config["gtfs"].source = "./test/data/delijn.test.0.zip";
+    config["gtfs"]["source"] = "./test/data/delijn.test.0.zip";
     const { count, failed } = await processGTFS(config);
     expect(count).toBe(201);
     expect(failed).toBe(0);
@@ -88,7 +94,7 @@ test("Process GTFS file for the first time (should produce a total of 201 connec
 
 test("Process second GTFS file (should only produce 6 new connections due to historic records)", async () => {
     expect.assertions(2);
-    config["gtfs"].source = "./test/data/delijn.test.1.zip";
+    config["gtfs"]["source"] = "./test/data/delijn.test.1.zip";
     const { count, failed } = await processGTFS(config);
     expect(count).toBe(6);
     expect(failed).toBe(0);
@@ -101,7 +107,7 @@ test("Process first GTFS-realtime update (should update only 1 connection with d
     const history = await getHistoryDB();
     idxs.historyDB = history;
     // Process GTFS-realtime update
-    config["gtfs_realtime"].source = "./test/data/delijn-realtime.0.pbf";
+    config["gtfs_realtime"]["source"] = "./test/data/delijn-realtime.0.pbf";
     const { count, failed } = await processGTFSRealtime(config, idxs);
     // Get connection we expect to be updated
     const updatedConn = await history.get("Turnhout-Herentals-Herselt-Leuven/59/102827/106231/13:10:00/15:01:00/15:03:00/0/0");
@@ -119,7 +125,7 @@ test("Process second GTFS-realtime update (should update only 1 connection with 
     const history = await getHistoryDB();
     idxs.historyDB = history;
     // Process GTFS-realtime update
-    config["gtfs_realtime"].source = "./test/data/delijn-realtime.1.pbf";
+    config["gtfs_realtime"]["source"] = "./test/data/delijn-realtime.1.pbf";
     const { count, failed } = await processGTFSRealtime(config, idxs);
     // Get connection we expect to be updated
     const updatedConn = await history.get("Turnhout-Herentals-Herselt-Leuven/59/102827/106231/13:10:00/15:01:00/15:03:00/0/0");
