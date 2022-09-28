@@ -31,6 +31,7 @@ const config = {
         "wgs:lat": { "@type": "xsd:double" },
         "wgs:long": { "@type": "xsd:double" },
         "gsp:asWKT": { "@type": "gsp:wktLiteral" },
+        "Stop": { "@id": "gtfs:Stop", "@type": "@id" },
         "Connection": { "@id": "lc:Connection", "@type": "@id" },
         "CancelledConnection": { "@id": "lc:CancelledConnection", "@type": "@id" },
         "departureTime": { "@id": "lc:departureTime", "@type": "xsd:dateTime" },
