@@ -39,7 +39,7 @@ const config = {
         "departureStop": { "@id": "lc:departureStop", "@type": "@id" },
         "arrivalStop": { "@id": "lc:arrivalStop", "@type": "@id" },
         "isVersionOf": { "@id": "dct:isVersionOf", "@type": "@id" },
-        "generatedAtTime": { "@id": "prov:generatedAtTime", "@type": "xsd:dateTime"}
+        "generatedAtTime": { "@id": "prov:generatedAtTime", "@type": "xsd:dateTime" }
     },
     "uri_templates": {
         "stop": "https://data.delijn.be/stops/{stops.stop_code}",
@@ -91,6 +91,7 @@ test("Process GTFS file for the first time (should produce a total of 201 connec
     const { count, failed } = await processGTFS(config);
     expect(count).toBe(201);
     expect(failed).toBe(0);
+    await cleanOutput();
 });
 
 test("Process second GTFS file (should only produce 6 new connections due to historic records)", async () => {
@@ -99,6 +100,7 @@ test("Process second GTFS file (should only produce 6 new connections due to his
     const { count, failed } = await processGTFS(config);
     expect(count).toBe(6);
     expect(failed).toBe(0);
+    await cleanOutput();
 });
 
 test("Process first GTFS-realtime update (should update only 1 connection with delays)", async () => {
@@ -156,10 +158,14 @@ async function getHistoryDB() {
     return historyDB;
 }
 
+async function cleanOutput() {
+    await del(["./test/data/linkedConnections.json.gz"]);
+}
+
 async function cleanUp() {
     await del([
         "./test/data/*.txt",
         "./test/data/history.db",
-        "./test/data/linkedConnections.json"
+        "./test/data/linkedConnections.json.gz"
     ], { force: true });
 }
