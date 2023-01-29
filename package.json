@@ -1,6 +1,6 @@
 {
   "name": "gtfs2ldes-js",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "GTFS and GTFS-realtime data extractor for LDES publishing",
   "type": "module",
   "main": "bin/gtfs2ldes.js",
@@ -21,7 +21,7 @@
     "cron": "^2.0.0",
     "date-fns": "^2.29.3",
     "del": "^6.1.1",
-    "gtfs2lc": "^2.1.4",
+    "gtfs2lc": "^2.2.0",
     "gtfsrt2lc": "^2.0.4",
     "jsonld": "^6.0.0",
     "level": "^8.0.0",
