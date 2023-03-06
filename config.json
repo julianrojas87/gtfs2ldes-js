@@ -37,6 +37,8 @@
         "CancelledConnection": { "@id": "lc:CancelledConnection", "@type": "@id" },
         "departureTime": { "@id": "lc:departureTime", "@type": "xsd:dateTime" },
         "arrivalTime": { "@id": "lc:arrivalTime", "@type": "xsd:dateTime" },
+        "departureDelay": { "@id": "lc:departureDelay", "@type": "xsd:integer" },
+        "arrivalDelay": { "@id": "lc:arrivalDelay", "@type": "xsd:integer" },
         "departureStop": { "@id": "lc:departureStop", "@type": "@id" },
         "arrivalStop": { "@id": "lc:arrivalStop", "@type": "@id" },
         "isVersionOf": { "@id": "dct:isVersionOf", "@type": "@id" },
