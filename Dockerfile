@@ -1,12 +1,12 @@
 # Start from a Node.js ready container
-FROM node:18
+FROM node:18.15.0
 # Set working directory in the container
 WORKDIR /opt/gtfs2ldes
 # Copy source files
 COPY . .
 ## Install dependencies
 ENV NODE_ENV production
-RUN npm i --omit=dev
+RUN npm ci --omit=dev
 # Install envsub to parse environment variables
 RUN npm install -g envsub
 # Set output volume path
