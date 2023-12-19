@@ -60,7 +60,7 @@ let server;
 let historyDB;
 let indexes;
 
-jest.setTimeout(60000);
+jest.setTimeout(30000);
 
 beforeAll(async () => {
     // Setup mock target server
@@ -86,6 +86,7 @@ beforeAll(async () => {
 afterAll(async () => {
     // Clean up
     await cleanUp();
+    console.log(server);
     await server.close();
 });
 
