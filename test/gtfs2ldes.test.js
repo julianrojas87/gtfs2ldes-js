@@ -9,7 +9,7 @@ import { buildIndexes, processGTFSRealtime } from "../lib/GTFSRealtime.js";
 const config = {
     "general": {
         "data_folder": "./test/data",
-        "target_url": "http://localhost:8080/test",
+        "target_url": "http://localhost:3001/test",
         "throttle_rate": 5
     },
     "gtfs": {},
@@ -76,7 +76,7 @@ beforeAll(async () => {
         });
     });
 
-    await server.listen({ port: 8080, host: "0.0.0.0" });
+    await server.listen({ port: 3001, host: "0.0.0.0" });
 });
 
 afterAll(async () => {
