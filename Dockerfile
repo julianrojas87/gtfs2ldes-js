@@ -6,7 +6,7 @@ WORKDIR /opt/gtfs2ldes
 COPY . .
 ## Install dependencies
 ENV NODE_ENV production
-RUN npm ci --omit=dev
+RUN npm i --omit=dev
 # Install envsub to parse environment variables
 RUN npm install -g envsub
 # Set output volume path
