@@ -23,7 +23,7 @@
     "date-fns": "^2.30.0",
     "del": "^7.1.0",
     "gtfs2lc": "^2.2.1",
-    "gtfsrt2lc": "^2.1.4",
+    "gtfsrt2lc": "^2.1.5",
     "jsonld": "^8.3.2",
     "level": "^8.0.0",
     "stream-json": "^1.8.0",
