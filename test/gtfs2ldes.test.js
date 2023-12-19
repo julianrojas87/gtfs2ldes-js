@@ -64,7 +64,7 @@ jest.setTimeout(30000);
 
 beforeAll(async () => {
     // Setup mock target server
-    server = fastify({ logger: true });
+    server = fastify({ logger: false });
     // Add support for N-Triples
     server.addContentTypeParser(
         "application/n-triples",
@@ -85,9 +85,8 @@ beforeAll(async () => {
 
 afterAll(async () => {
     // Clean up
+    server.close();
     await cleanUp();
-    console.log(server);
-    await server.close();
 });
 
 test("Process GTFS file for the first time (should produce a total of 201 connections)", async () => {
