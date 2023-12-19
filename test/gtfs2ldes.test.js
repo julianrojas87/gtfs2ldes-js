@@ -9,7 +9,7 @@ import { buildIndexes, processGTFSRealtime } from "../lib/GTFSRealtime.js";
 const config = {
     "general": {
         "data_folder": "./test/data",
-        "target_url": "http://localhost:3001/test",
+        "target_url": "http://0.0.0.0:3001/test",
         "throttle_rate": 5
     },
     "gtfs": {},
@@ -64,11 +64,15 @@ jest.setTimeout(30000);
 
 beforeAll(async () => {
     // Setup mock target server
-    server = fastify({ logger: false });
+    server = fastify({ logger: true });
     // Add support for N-Triples
-    server.addContentTypeParser("application/n-triples", { parseAs: 'string' }, function (req, body, done) {
-        done(null, body);
-    });
+    server.addContentTypeParser(
+        "application/n-triples",
+        { parseAs: 'string' },
+        function (req, body, done) {
+            done(null, body);
+        }
+    );
 
     await server.register(async (fstfy) => {
         fstfy.post("/*", async (request, reply) => {
@@ -82,6 +86,7 @@ beforeAll(async () => {
 afterAll(async () => {
     // Clean up
     await cleanUp();
+    await server.close();
 });
 
 test("Process GTFS file for the first time (should produce a total of 201 connections)", async () => {
