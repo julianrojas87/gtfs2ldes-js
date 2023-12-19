@@ -6,6 +6,7 @@ WORKDIR /opt/gtfs2ldes
 COPY . .
 ## Install dependencies
 ENV NODE_ENV production
+RUN npm config get proxy
 RUN npm ci --omit=dev
 # Install envsub to parse environment variables
 RUN npm install -g envsub
