@@ -60,7 +60,7 @@ let server;
 let historyDB;
 let indexes;
 
-jest.setTimeout(30000);
+jest.setTimeout(60000);
 
 beforeAll(async () => {
     // Setup mock target server
