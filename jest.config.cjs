@@ -1,3 +1,3 @@
 module.exports = {
-    setupFiles: ['./jest.polyfills.js'],
+    setupFiles: ['./jest.polyfills.cjs'],
 }
