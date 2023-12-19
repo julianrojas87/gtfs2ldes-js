@@ -1,5 +1,5 @@
 # Start from a Node.js ready container
-FROM node:18.15.0
+FROM node:18
 # Set working directory in the container
 WORKDIR /opt/gtfs2ldes
 # Copy source files
