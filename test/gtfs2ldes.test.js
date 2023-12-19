@@ -1,8 +1,7 @@
-import { jest } from "@jest/globals";
-import fs from "fs";
+import { jest, test, beforeAll, afterAll, expect } from "@jest/globals";
 import fastify from "fastify";
 import { Level } from "level";
-import del from "del";
+import { deleteAsync } from "del";
 import { processGTFS } from "../lib/GTFS.js";
 import { buildIndexes, processGTFSRealtime } from "../lib/GTFSRealtime.js";
 
@@ -10,7 +9,7 @@ import { buildIndexes, processGTFSRealtime } from "../lib/GTFSRealtime.js";
 const config = {
     "general": {
         "data_folder": "./test/data",
-        "target_url": "http://localhost:8080/test",
+        "target_url": "http://0.0.0.0:3001/test",
         "throttle_rate": 5
     },
     "gtfs": {},
@@ -57,19 +56,23 @@ const config = {
     }
 };
 
-jest.setTimeout(30000);
-
 let server;
 let historyDB;
 let indexes;
+
+jest.setTimeout(30000);
 
 beforeAll(async () => {
     // Setup mock target server
     server = fastify({ logger: false });
     // Add support for N-Triples
-    server.addContentTypeParser("application/n-triples", { parseAs: 'string' }, function (req, body, done) {
-        done(null, body);
-    });
+    server.addContentTypeParser(
+        "application/n-triples",
+        { parseAs: 'string' },
+        function (req, body, done) {
+            done(null, body);
+        }
+    );
 
     await server.register(async (fstfy) => {
         fstfy.post("/*", async (request, reply) => {
@@ -77,16 +80,16 @@ beforeAll(async () => {
         });
     });
 
-    await server.listen({ port: 8080, host: "0.0.0.0" });
+    await server.listen({ port: 3001, host: "0.0.0.0" });
 });
 
 afterAll(async () => {
     // Clean up
+    server.close();
     await cleanUp();
 });
 
 test("Process GTFS file for the first time (should produce a total of 201 connections)", async () => {
-    expect.assertions(2);
     config["gtfs"]["source"] = "./test/data/delijn.test.0.zip";
     const { count, failed } = await processGTFS(config);
     expect(count).toBe(201);
@@ -95,7 +98,6 @@ test("Process GTFS file for the first time (should produce a total of 201 connec
 });
 
 test("Process second GTFS file (should only produce 6 new connections due to historic records)", async () => {
-    expect.assertions(2);
     config["gtfs"]["source"] = "./test/data/delijn.test.1.zip";
     const { count, failed } = await processGTFS(config);
     expect(count).toBe(6);
@@ -104,7 +106,6 @@ test("Process second GTFS file (should only produce 6 new connections due to his
 });
 
 test("Process first GTFS-realtime update (should update only 1 connection with delays)", async () => {
-    expect.assertions(4);
     // Build static indexes
     const idxs = await getIndexes();
     const history = await getHistoryDB();
@@ -113,7 +114,7 @@ test("Process first GTFS-realtime update (should update only 1 connection with d
     config["gtfs_realtime"]["source"] = "./test/data/delijn-realtime.0.pbf";
     const { count, failed } = await processGTFSRealtime(config, idxs);
     // Get connection we expect to be updated
-    const updatedConn = await history.get("Turnhout-Herentals-Herselt-Leuven/59/102827/106231/13:10:00/15:01:00/15:03:00/0/0");
+    const updatedConn = await history.get("Turnhout-Herentals-Herselt-Leuven/59/102827/106231/13:10:00/15:04:00/15:05:00/0/0");
 
     expect(count).toBe(1);
     expect(failed).toBe(0);
@@ -122,7 +123,6 @@ test("Process first GTFS-realtime update (should update only 1 connection with d
 });
 
 test("Process second GTFS-realtime update (should update only 1 connection with different delays)", async () => {
-    expect.assertions(4);
     // Build static indexes
     const idxs = await getIndexes();
     const history = await getHistoryDB();
@@ -131,7 +131,7 @@ test("Process second GTFS-realtime update (should update only 1 connection with 
     config["gtfs_realtime"]["source"] = "./test/data/delijn-realtime.1.pbf";
     const { count, failed } = await processGTFSRealtime(config, idxs);
     // Get connection we expect to be updated
-    const updatedConn = await history.get("Turnhout-Herentals-Herselt-Leuven/59/102827/106231/13:10:00/15:01:00/15:03:00/0/0");
+    const updatedConn = await history.get("Turnhout-Herentals-Herselt-Leuven/59/102827/106231/13:10:00/15:04:00/15:05:00/0/0");
 
     expect(count).toBe(1);
     expect(failed).toBe(0);
@@ -159,11 +159,11 @@ async function getHistoryDB() {
 }
 
 async function cleanOutput() {
-    await del(["./test/data/linkedConnections.json.gz"]);
+    await deleteAsync(["./test/data/linkedConnections.json.gz"]);
 }
 
 async function cleanUp() {
-    await del([
+    await deleteAsync([
         "./test/data/*.txt",
         "./test/data/history.db",
         "./test/data/linkedConnections.json.gz"

@@ -13,10 +13,9 @@ async function run() {
     let rtState = false;
 
     // Create cron job to process GTFS-realtime updates
-    const gtfsRealtimeJob = new CronJob({
-        cronTime: config["gtfs_realtime"].cron,
-        start: true,
-        onTick: async () => {
+    const gtfsRealtimeJob = new CronJob(
+        config["gtfs_realtime"].cron,
+        async () => {
             if (!indexes) {
                 const t0 = new Date();
                 // Creating all the indexes may take some time
@@ -43,14 +42,15 @@ async function run() {
                 await processGTFSRealtime(config, indexes);
                 rtState = false;
             }
-        }
-    });
+        },
+        null,
+        true
+    );
 
     // Create and schedule cron job to process static GTFS
-    new CronJob({
-        cronTime: config["gtfs"].cron,
-        start: true,
-        onTick: async () => {
+    new CronJob(
+        config["gtfs"].cron,
+        async () => {
             // Stop realtime process first
             if (gtfsRealtimeJob.running) {
                 gtfsRealtimeJob.stop();
@@ -60,8 +60,10 @@ async function run() {
             indexes = null;
             // Schedule realtime job now that we processed static data
             gtfsRealtimeJob.start();
-        }
-    });
+        },
+        null,
+        true
+    );
 
     // Trigger data jobs if configured for it
     if (config["general"].run_on_launch === "true") {
