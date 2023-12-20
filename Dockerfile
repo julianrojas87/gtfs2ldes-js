@@ -9,7 +9,6 @@ ENV NODE_ENV production
 RUN npm config set fetch-retries 5
 RUN npm config set fetch-retry-mintimeout 100000
 RUN npm config set fetch-retry-maxtimeout 600000
-RUN npm config set timeout 6000000
 ## Install dependencies
 RUN npm ci --omit=dev
 # Install envsub to parse environment variables
