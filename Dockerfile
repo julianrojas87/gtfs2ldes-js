@@ -6,7 +6,6 @@ WORKDIR /opt/gtfs2ldes
 COPY . .
 ## Install dependencies
 ENV NODE_ENV production
-RUN npm config set registry https://registry.npmjs.org/
 RUN npm ci --omit=dev
 # Install envsub to parse environment variables
 RUN npm install -g envsub

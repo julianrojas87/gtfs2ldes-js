@@ -1,6 +1,9 @@
+.git
 node_modules
 .rt_indexes
 .github
 coverage
 test
 data
+Dockerfile
+.dockerignore
