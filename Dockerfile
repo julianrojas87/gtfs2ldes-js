@@ -6,7 +6,9 @@ WORKDIR /opt/gtfs2ldes
 COPY . .
 ## Install dependencies
 ENV NODE_ENV production
-RUN npm ci --omit=dev
+# Extend timeout for package installation
+RUN npm config set fetch-retry-maxtimeout 60000
+RUN npm ci --omit=dev --timeout 600000
 # Install envsub to parse environment variables
 RUN npm install -g envsub
 # Set output volume path
